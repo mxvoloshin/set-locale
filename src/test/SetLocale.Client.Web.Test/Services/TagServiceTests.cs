@@ -43,14 +43,14 @@ namespace SetLocale.Client.Web.Test.Services
                 words.Add(new Word { Id = i });
 
             var wordRepository = new Mock<IRepository<Word>>();
-            wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>()))
+            wordRepository.Setup(x => x.FindAll(It.IsAny<Expression<Func<Word, bool>>>(), It.IsAny<Expression<Func<Word, object>>>()))
                           .Returns(words.AsQueryable());
 
             //act
             var sut = new TagServiceBuilder().WithWordRepository(wordRepository.Object)
                                              .Build();
 
-            var result = await sut.GetWords(string.Empty, 2);
+            var result = await sut.GetWords("url", 2);
 
             //assert
             Assert.AreEqual(result.Number, 2);
