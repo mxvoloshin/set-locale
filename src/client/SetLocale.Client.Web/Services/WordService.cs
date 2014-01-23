@@ -59,12 +59,41 @@ namespace SetLocale.Client.Web.Services
             {
                 Key = slug,
                 Description = model.Description ?? string.Empty,
-                IsTranslated = false,
-                TranslationCount = 0,
+                IsTranslated = model.IsTranslated,
+                TranslationCount = model.Translations.Count,
                 CreatedBy = model.CreatedBy,
                 UpdatedBy = model.CreatedBy,
                 Tags = tags
             };
+
+            if (model.IsTranslated)
+            {
+                foreach (var item in model.Translations)
+                {
+                    if (item.Language.Key == LanguageModel.TR().Key)
+                        word.Translation_TR = item.Value;
+                    else if (item.Language.Key == LanguageModel.EN().Key)
+                        word.Translation_EN = item.Value;
+                    else if (item.Language.Key == LanguageModel.AZ().Key)
+                        word.Translation_AZ = item.Value;
+                    else if (item.Language.Key == LanguageModel.CN().Key)
+                        word.Translation_CN = item.Value;
+                    else if (item.Language.Key == LanguageModel.FR().Key)
+                        word.Translation_FR = item.Value;
+                    else if (item.Language.Key == LanguageModel.GR().Key)
+                        word.Translation_GR = item.Value;
+                    else if (item.Language.Key == LanguageModel.IT().Key)
+                        word.Translation_IT = item.Value;
+                    else if (item.Language.Key == LanguageModel.KZ().Key)
+                        word.Translation_KZ = item.Value;
+                    else if (item.Language.Key == LanguageModel.RU().Key)
+                        word.Translation_RU = item.Value;
+                    else if (item.Language.Key == LanguageModel.SP().Key)
+                        word.Translation_SP = item.Value;
+                    else if (item.Language.Key == LanguageModel.TK().Key)
+                        word.Translation_TK = item.Value;
+                }
+            }
 
             _wordRepository.Create(word);
             

@@ -1,0 +1,19 @@
+﻿@model AppModel
+
+@{
+    ViewBag.Title = Html.LocalizationString("import_title");
+}
+
+<h2>@Html.LocalizationString("import")</h2>
+
+<form action="/admin/import" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <input type="file" name="file" id="file" />
+    </div>
+    <div class="row">
+        <input type="submit" value="@Html.LocalizationString("btn_import")" />
+    </div>
+    <div class="error">
+        @Model.Msg
+    </div>
+</form>

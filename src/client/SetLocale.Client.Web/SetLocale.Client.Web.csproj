@@ -149,6 +149,7 @@
     <Content Include="Views\User\Words.cshtml" />
     <Content Include="Views\App\Detail.cshtml" />
     <Content Include="Views\Tag\Detail.cshtml" />
+    <Content Include="Views\Admin\Import.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

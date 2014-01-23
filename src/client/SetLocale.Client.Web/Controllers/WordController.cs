@@ -191,7 +191,7 @@ namespace SetLocale.Client.Web.Controllers
                         }
                         else
                         {
-                            result += string.Format(", {0}", tag.Name);
+                            result += string.Format(",{0}", tag.Name);
                         }
                     }
                     return result;

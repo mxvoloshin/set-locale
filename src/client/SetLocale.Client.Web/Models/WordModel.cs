@@ -63,7 +63,7 @@ namespace SetLocale.Client.Web.Models
                         UrlName = tag.UrlName
                     });
 
-                    model.Tag += string.Format("{0},", tag);
+                    model.Tag += string.Format("{0},", tag.Name);
                 }
             }
 
