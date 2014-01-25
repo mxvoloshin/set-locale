@@ -143,20 +143,20 @@ namespace SetLocale.Client.Web.Controllers
         [HttpGet, AllowAnonymous]
         public ActionResult Import()
         {
-            var model = new AppModel();
-            return View(model);
+            ViewData["Message"] = "";
+            return View();
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<ActionResult> Import(AppModel model, HttpPostedFileBase file)
+        public async Task<ActionResult> Import(HttpPostedFileBase file)
         {
             //check file format
             var fileInfo = new FileInfo(file.FileName);
             
             if (!String.Equals(fileInfo.Extension, ".xlsx"))
             {
-                model.Msg = "File format is incorrect, *.xlsx file expected";
-                return View(model);
+                ViewData["Message"] = "File format is incorrect, *.xlsx file expected";
+                return View();
             }
 
             //read file data in buffer
@@ -169,8 +169,8 @@ namespace SetLocale.Client.Web.Controllers
             {
                 if (!p.Workbook.Worksheets.Any())
                 {
-                    model.Msg = "No Worksheets in selected file";
-                    return View(model);
+                    ViewData["Message"] = "No Worksheets in selected file";
+                    return View();
                 }
                 
                 var workSheet = p.Workbook.Worksheets[1];
@@ -179,8 +179,8 @@ namespace SetLocale.Client.Web.Controllers
                 string errMessage;
                 if (!CheckExcelFileColumns(workSheet, out errMessage))
                 {
-                    model.Msg = errMessage;
-                    return View(model);
+                    ViewData["Message"] = errMessage;
+                    return View();
                 }
 
                 //read file data by row
@@ -199,17 +199,21 @@ namespace SetLocale.Client.Web.Controllers
 
                     var addedWord = _wordService.Create(wordModel);
                     if (addedWord == null)
+                    {
                         skipedWordsCount++;
+                    }
                     else
+                    {
                         addedWordsCount++;
+                    }
                 }
 
-                model.Msg = String.Format("Added new words: {0}.", addedWordsCount);
+                ViewData["Message"] = String.Format("Added new words: {0}.", addedWordsCount);
                 if (skipedWordsCount > 0)
-                    model.Msg = string.Format("{0} Words skipped: {1}.", model.Msg, skipedWordsCount);
+                    ViewData["Message"] = string.Format("{0} Words skipped: {1}.", ViewData["Message"], skipedWordsCount);
             }
 
-            return View(model);
+            return View();
         }
 
         private bool CheckExcelFileColumns(ExcelWorksheet sheet, out string errMessage)

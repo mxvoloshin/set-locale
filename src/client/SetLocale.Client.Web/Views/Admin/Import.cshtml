@@ -1,5 +1,4 @@
-﻿@model AppModel
-
+﻿
 @{
     ViewBag.Title = Html.LocalizationString("import_title");
 }
@@ -14,6 +13,6 @@
         <input type="submit" value="@Html.LocalizationString("btn_import")" />
     </div>
     <div class="error">
-        @Model.Msg
+        @ViewData["Message"]
     </div>
 </form>
